@@ -182,7 +182,9 @@ func init() {
 			// local mode (non --dev) and release binary should open browser (since --dev already opens browser via yarn and returns)
 			go func() {
 				if *options.noElectron {
-					openBrowser(appURL, openBrowserWg)
+// RP-462 commented out to prevent a browser window from opening. we will run via docker container and access gui
+// outside docker
+// 					openBrowser(appURL, openBrowserWg)
 				} else {
 					openElectron(trayIconPath, electronURL)
 				}
