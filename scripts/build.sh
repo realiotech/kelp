@@ -211,9 +211,13 @@ then
 
     if [ -z "$AMPLITUDE_API_KEY" ]
     then
-        # we want this to throw even if doing a force release because the code checks for the key when in release mode
-        echo "error: define the AMPLITUDE_API_KEY environment variable before compiling"
-        exit 1
+        # previously an error was thrown, the key is needed/checked for in release mode
+        # metrics can be disabled with a --no-headers flag via the cli
+        # leaving this path in here in case we want to add metrics later, but setting to a dummy key for now since we
+        # will use the no-headers flag
+        $AMPLITUDE_API_KEY = "noKey"
+#        echo "error: define the AMPLITUDE_API_KEY environment variable before compiling"
+#        exit 1
     fi
 
     if [[ IS_TEST_MODE -eq 0 ]]
@@ -282,7 +286,7 @@ then
     echo ""
 
     # manually set buildType for CLI
-    DYNAMIC_LDFLAGS="$LDFLAGS -X github.com/stellar/kelp/cmd.buildType=cli"
+    DYNAMIC_LDFLAGS="$LDFLAGS -X github.com/stellar/kelp/cmd.buildType=gui"
 
     # cannot set goarm because not accessible (need to figure out a way)
     echo -n "compiling ... "
@@ -324,7 +328,7 @@ do
     fi
 
     # manually set buildType for CLI
-    DYNAMIC_LDFLAGS="$LDFLAGS -X github.com/stellar/kelp/cmd.buildType=cli"
+    DYNAMIC_LDFLAGS="$LDFLAGS -X github.com/stellar/kelp/cmd.buildType=gui"
 
     if [[ "$GOARM" != "" ]]
     then
