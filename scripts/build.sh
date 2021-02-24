@@ -285,7 +285,7 @@ then
     gen_bind_files
     echo ""
 
-    # manually set buildType for CLI
+    # manually set buildType for GUI
     DYNAMIC_LDFLAGS="$LDFLAGS -X github.com/stellar/kelp/cmd.buildType=gui"
 
     # cannot set goarm because not accessible (need to figure out a way)
@@ -327,7 +327,7 @@ do
         BINARY="$OUTFILE.exe"
     fi
 
-    # manually set buildType for CLI
+    # manually set buildType for GUI
     DYNAMIC_LDFLAGS="$LDFLAGS -X github.com/stellar/kelp/cmd.buildType=gui"
 
     if [[ "$GOARM" != "" ]]
