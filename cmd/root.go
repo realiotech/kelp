@@ -114,6 +114,8 @@ func validateBuild() {
 }
 
 func isCcxtUp(ccxtURL string) error {
+    // use the /exchanges uri as a test request for ccxt availability. there is no ping url on the api
+    ccxtURL = ccxtURL + "/exchanges"
 	e := networking.JSONRequest(http.DefaultClient, "GET", ccxtURL, "", map[string]string{}, nil, "")
 	if e != nil {
 		return fmt.Errorf("unable to connect to ccxt at the URL %s: %s", ccxtURL, e)
