@@ -215,35 +215,11 @@ then
         # metrics can be disabled with a --no-headers flag via the cli
         # leaving this path in here in case we want to add metrics later, but setting to a dummy key for now since we
         # will use the no-headers flag
-        export AMPLITUDE_API_KEY="noKey"
+        AMPLITUDE_API_KEY="noKey"
 #       echo "error: define the AMPLITUDE_API_KEY environment variable before compiling"
 #       exit 1
     fi
 
-    if [[ IS_TEST_MODE -eq 0 ]]
-    then
-        if ! [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-rc[1-9]+)?$ ]]
-        then
-            if [[ FORCE_RELEASE -eq 0 ]]
-            then
-                echo "error: the git commit needs to be tagged with a valid version to prepare archives, see $0 -h for more information"
-                exit 1
-            else
-                echo "force release option set so ignoring version format"
-            fi
-        fi
-        EXPECTED_GIT_RELEASE_BRANCH="release/$(echo $VERSION | cut -d '.' -f1,2).x"
-        if ! [[ ("$GIT_BRANCH" == "$EXPECTED_GIT_RELEASE_BRANCH") || ("$GIT_BRANCH" == "master") ]]
-        then
-            if [[ FORCE_RELEASE -eq 0 ]]
-            then
-                echo "error: you can only deploy an official release from the 'master' branch or a branch named in the format of 'release/vA.B.x' where 'A' and 'B' are positive numbers that co-incide with the major and minor versions of your release, example: $EXPECTED_GIT_RELEASE_BRANCH"
-                exit 1
-            else
-                echo "force release option set so ignoring release branch requirements"
-            fi
-        fi
-    fi
 fi
 
 echo ""
