@@ -215,9 +215,9 @@ then
         # metrics can be disabled with a --no-headers flag via the cli
         # leaving this path in here in case we want to add metrics later, but setting to a dummy key for now since we
         # will use the no-headers flag
-        $AMPLITUDE_API_KEY = "noKey"
-#        echo "error: define the AMPLITUDE_API_KEY environment variable before compiling"
-#        exit 1
+        export AMPLITUDE_API_KEY = "noKey"
+#       echo "error: define the AMPLITUDE_API_KEY environment variable before compiling"
+#       exit 1
     fi
 
     if [[ IS_TEST_MODE -eq 0 ]]
