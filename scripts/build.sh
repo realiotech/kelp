@@ -175,7 +175,10 @@ elif [[ (($# -eq 1 || $# -eq 2) && ("$1" == "-g" || "$1" == "--gen-ccxt")) ]]; t
     usage
     exit 1
 elif [[ $# -eq 0 ]]; then
-    ENV=dev
+# used to be set to dev as default, eduardo changed to release so we gen static web assets all the time
+    ENV=release
+# set force release to avoid git tagging requirement
+    FORCE_RELEASE=1
 else
     usage
     exit 1
