@@ -372,9 +372,9 @@ func init() {
 		// the frontend app checks the REACT_APP_API_PORT variable to be set when serving
 		os.Setenv("REACT_APP_API_PORT", fmt.Sprintf("%d", *options.port))
 
-		if isLocalMode {
-			generateStaticFiles(kos, guiWebPath)
-		}
+// 		if isLocalMode {
+// 			generateStaticFiles(kos, guiWebPath)
+// 		}
 
 		r := chi.NewRouter()
 		setMiddleware(r)
