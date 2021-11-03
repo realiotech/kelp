@@ -836,6 +836,8 @@ func (sdex *SDEX) GetLatestTradeCursor() (interface{}, error) {
 
 			log.Printf("received a Resource Missing error while fetching trades, treating as if no trades exist for this trading pair and continuing: %s", e)
 			return nil, nil
+		} else {
+			// todo attempt to call horizon for trade cursor and parse
 		}
 		return nil, fmt.Errorf("error while fetching latest trade cursor in SDEX: %s", e)
 	}
@@ -883,7 +885,8 @@ func (sdex *SDEX) GetOrderBook(pair *model.TradingPair, maxCount int32) (*model.
 		SellingAssetType:   horizonclient.AssetType(baseAsset.Type),
 		SellingAssetCode:   baseAsset.Code,
 		SellingAssetIssuer: baseAsset.Issuer,
-		BuyingAssetType:    horizonclient.AssetType(quoteAsset.Type),
+		BuyingAssetType:
+			.AssetType(quoteAsset.Type),
 		BuyingAssetCode:    quoteAsset.Code,
 		BuyingAssetIssuer:  quoteAsset.Issuer,
 	}
