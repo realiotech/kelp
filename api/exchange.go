@@ -249,7 +249,7 @@ func ConvertOperation2TM(ops []txnbuild.Operation) []build.TransactionMutator {
 				build.Rate{
 					Selling: build.Asset{Code: mso.Selling.GetCode(), Issuer: mso.Selling.GetIssuer(), Native: mso.Selling.IsNative()},
 					Buying:  build.Asset{Code: mso.Buying.GetCode(), Issuer: mso.Buying.GetIssuer(), Native: mso.Buying.IsNative()},
-					Price:   build.Price(mso.Price),
+					Price:   build.Price(mso.Price.String()),
 				},
 				build.OfferID(mso.OfferID),
 			)
@@ -300,7 +300,7 @@ func convertMOB2MSO(mob build.ManageOfferBuilder) *txnbuild.ManageSellOffer {
 	mso := &txnbuild.ManageSellOffer{
 		Amount:  fmt.Sprintf("%.7f", float64(mob.MO.Amount)/math.Pow(10, 7)),
 		OfferID: int64(mob.MO.OfferId),
-		Price:   fmt.Sprintf("%.7f", float64(mob.MO.Price.N)/float64(mob.MO.Price.D)),
+		Price:   mob.MO.Price,
 	}
 	if mob.O.SourceAccount != nil {
 		mso.SourceAccount = mob.O.SourceAccount.Address()

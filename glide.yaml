@@ -1,0 +1,509 @@
+package: .
+import:
+- package: cloud.google.com/go
+  subpackages:
+  - compute/internal
+  - compute/metadata
+  - storage
+- package: firebase.google.com/go
+  subpackages:
+  - auth
+- package: github.com/Beldur/kraken-go-api-client
+- package: github.com/BurntSushi/toml
+  subpackages:
+  - internal
+  - internal/tag
+- package: github.com/Masterminds/squirrel
+- package: github.com/Microsoft/go-winio
+- package: github.com/PagerDuty/go-pagerduty
+  subpackages:
+  - webhookv3
+- package: github.com/adjust/goautoneg
+- package: github.com/adshao/go-binance
+  subpackages:
+  - v2
+  - v2/common
+  - v2/delivery
+  - v2/futures
+- package: github.com/asaskevich/govalidator
+- package: github.com/asticode/go-astilectron
+- package: github.com/asticode/go-astilectron-bootstrap
+- package: github.com/asticode/go-astilog
+- package: github.com/auth0/go-jwt-middleware
+- package: github.com/aws/aws-sdk-go
+  subpackages:
+  - aws
+  - aws/session
+  - service/s3
+- package: github.com/bitly/go-simplejson
+- package: github.com/cavaliercoder/grab
+  subpackages:
+  - bps
+  - grabui
+- package: github.com/cpuguy83/go-md2man
+  subpackages:
+  - v2/md2man
+- package: github.com/creachadair/jrpc2
+  subpackages:
+  - code
+  - handler
+  - jhttp
+- package: github.com/davecgh/go-spew
+  subpackages:
+  - spew
+- package: github.com/denisbrodbeck/machineid
+- package: github.com/form3tech-oss/jwt-go
+- package: github.com/fsnotify/fsnotify
+- package: github.com/getsentry/raven-go
+- package: github.com/go-chi/chi
+  subpackages:
+  - middleware
+- package: github.com/go-errors/errors
+- package: github.com/google/go-querystring
+  subpackages:
+  - query
+- package: github.com/google/uuid
+- package: github.com/googleapis/gax-go
+  subpackages:
+  - v2
+- package: github.com/googleapis/google-cloud-go-testing
+  subpackages:
+  - storage/stiface
+- package: github.com/gorilla/schema
+- package: github.com/gorilla/websocket
+- package: github.com/graph-gophers/graphql-go
+  subpackages:
+  - relay
+- package: github.com/guregu/null
+  subpackages:
+  - zero
+- package: github.com/hashicorp/hcl
+  subpackages:
+  - hcl/ast
+  - hcl/parser
+  - hcl/printer
+  - hcl/scanner
+  - hcl/strconv
+  - hcl/token
+  - json/parser
+  - json/scanner
+  - json/token
+- package: github.com/holiman/uint256
+- package: github.com/howeyc/gopass
+- package: github.com/inconshreveable/mousetrap
+- package: github.com/jarcoal/httpmock
+- package: github.com/jmoiron/sqlx
+  subpackages:
+  - reflectx
+- package: github.com/json-iterator/go
+- package: github.com/kr/session
+- package: github.com/lechengfan/googleauth
+- package: github.com/lib/pq
+  subpackages:
+  - oid
+  - scram
+- package: github.com/magiconair/properties
+- package: github.com/manucorporat/sse
+- package: github.com/mitchellh/cli
+- package: github.com/mitchellh/go-homedir
+- package: github.com/mitchellh/mapstructure
+- package: github.com/modern-go/concurrent
+- package: github.com/modern-go/reflect2
+- package: github.com/nikhilsaraf/go-tools
+  subpackages:
+  - multithreading
+- package: github.com/pelletier/go-toml
+  subpackages:
+  - v2
+  - v2/internal/ast
+  - v2/internal/cli
+  - v2/internal/danger
+  - v2/internal/testsuite
+  - v2/internal/tracker
+- package: github.com/pkg/browser
+- package: github.com/pkg/errors
+- package: github.com/pkg/sftp
+- package: github.com/pmezard/go-difflib
+  subpackages:
+  - difflib
+- package: github.com/prometheus/client_golang
+  subpackages:
+  - prometheus
+  - prometheus/promhttp
+- package: github.com/rs/cors
+- package: github.com/rubenv/sql-migrate
+- package: github.com/sagikazarmark/crypt
+  subpackages:
+  - config
+- package: github.com/segmentio/go-loggly
+- package: github.com/shurcooL/vfsgen
+- package: github.com/sirupsen/logrus
+  subpackages:
+  - hooks/test
+- package: github.com/spf13/afero
+  subpackages:
+  - internal/common
+  - mem
+- package: github.com/spf13/cast
+- package: github.com/spf13/cobra
+- package: github.com/spf13/jwalterweatherman
+- package: github.com/spf13/pflag
+- package: github.com/spf13/viper
+  subpackages:
+  - internal/encoding
+  - internal/encoding/dotenv
+  - internal/encoding/hcl
+  - internal/encoding/ini
+  - internal/encoding/javaproperties
+  - internal/encoding/json
+  - internal/encoding/toml
+  - internal/encoding/yaml
+- package: github.com/stellar/go-xdr
+  subpackages:
+  - xdr3
+- package: github.com/stellar/go
+  subpackages:
+  - address
+  - amount
+  - clients/horizonclient
+  - clients/stellarcore
+  - clients/stellartoml
+  - exp/crypto/derivation
+  - exp/orderbook
+  - exp/services/captivecore/internal
+  - exp/services/recoverysigner/cmd
+  - exp/services/recoverysigner/internal/account
+  - exp/services/recoverysigner/internal/db
+  - exp/services/recoverysigner/internal/db/dbmigrate
+  - exp/services/recoverysigner/internal/serve
+  - exp/services/recoverysigner/internal/serve/auth
+  - exp/services/soroban-rpc/internal
+  - exp/services/soroban-rpc/internal/methods
+  - exp/services/webauth/cmd
+  - exp/services/webauth/internal/serve
+  - exp/support/jwtkey
+  - handlers/federation
+  - hash
+  - historyarchive
+  - ingest
+  - ingest/ledgerbackend
+  - keypair
+  - network
+  - price
+  - protocols/federation
+  - protocols/horizon
+  - protocols/horizon/base
+  - protocols/horizon/effects
+  - protocols/horizon/operations
+  - protocols/stellarcore
+  - services/friendbot/internal
+  - services/horizon/cmd
+  - services/horizon/internal
+  - services/horizon/internal/actions
+  - services/horizon/internal/assets
+  - services/horizon/internal/codes
+  - services/horizon/internal/context
+  - services/horizon/internal/corestate
+  - services/horizon/internal/db2
+  - services/horizon/internal/db2/history
+  - services/horizon/internal/db2/schema
+  - services/horizon/internal/errors
+  - services/horizon/internal/hchi
+  - services/horizon/internal/httpx
+  - services/horizon/internal/ingest
+  - services/horizon/internal/ingest/filters
+  - services/horizon/internal/ingest/processors
+  - services/horizon/internal/ingest/verify
+  - services/horizon/internal/ledger
+  - services/horizon/internal/logmetrics
+  - services/horizon/internal/operationfeestats
+  - services/horizon/internal/paths
+  - services/horizon/internal/reap
+  - services/horizon/internal/render
+  - services/horizon/internal/render/problem
+  - services/horizon/internal/render/sse
+  - services/horizon/internal/resourceadapter
+  - services/horizon/internal/simplepath
+  - services/horizon/internal/test
+  - services/horizon/internal/test/db
+  - services/horizon/internal/test/scenarios
+  - services/horizon/internal/txsub
+  - services/horizon/internal/txsub/sequence
+  - services/horizon/internal/utf8
+  - services/keystore
+  - services/regulated-assets-approval-server/cmd
+  - services/regulated-assets-approval-server/internal/configureissuer
+  - services/regulated-assets-approval-server/internal/db
+  - services/regulated-assets-approval-server/internal/db/dbmigrate
+  - services/regulated-assets-approval-server/internal/serve
+  - services/regulated-assets-approval-server/internal/serve/httperror
+  - services/regulated-assets-approval-server/internal/serve/kycstatus
+  - services/ticker/cmd
+  - services/ticker/internal
+  - services/ticker/internal/gql
+  - services/ticker/internal/gql/static
+  - services/ticker/internal/scraper
+  - services/ticker/internal/tickerdb
+  - services/ticker/internal/tickerdb/migrations
+  - services/ticker/internal/utils
+  - strkey
+  - strkey/internal/crc16
+  - support/app
+  - support/clock
+  - support/collections/set
+  - support/config
+  - support/db
+  - support/db/dbtest
+  - support/db/sqlutils
+  - support/env
+  - support/errors
+  - support/http
+  - support/http/httpauthz
+  - support/http/httpdecode
+  - support/http/mutil
+  - support/log
+  - support/ordered
+  - support/render/hal
+  - support/render/health
+  - support/render/httpjson
+  - support/render/problem
+  - support/strutils
+  - support/time
+  - support/url
+  - toid
+  - tools/horizon-cmp/internal
+  - tools/stellar-hd-wallet/commands
+  - txnbuild
+  - txnbuild/cmd/demo/cmd
+  - txnbuild/cmd/demo/operations
+  - xdr
+- package: github.com/stellar/kelp
+  subpackages:
+  - api
+  - cmd
+  - gui
+  - gui/backend
+  - gui/model2
+  - kelpdb
+  - model
+  - plugins
+  - queries
+  - stellargohorizonclientv300/build
+  - support/constants
+  - support/database
+  - support/guiconfig
+  - support/kelpos
+  - support/logger
+  - support/monitoring
+  - support/networking
+  - support/postgresdb
+  - support/prefs
+  - support/sdk
+  - support/toml
+  - support/utils
+  - terminator
+  - trader
+- package: github.com/stellar/throttled
+- package: github.com/stretchr/objx
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert
+  - http
+  - mock
+  - require
+- package: github.com/subosito/gotenv
+- package: github.com/tyler-smith/go-bip39
+- package: github.com/xdrpp/goxdr
+  subpackages:
+  - xdr
+- package: golang.org/x/crypto
+  subpackages:
+  - acme
+  - blake2b
+  - blowfish
+  - cast5
+  - chacha20
+  - cryptobyte
+  - cryptobyte/asn1
+  - curve25519
+  - curve25519/internal/field
+  - ed25519
+  - internal/alias
+  - internal/poly1305
+  - nacl/secretbox
+  - openpgp/armor
+  - openpgp/elgamal
+  - openpgp/errors
+  - openpgp/packet
+  - openpgp/s2k
+  - pbkdf2
+  - pkcs12/internal/rc2
+  - salsa20/salsa
+  - ssh
+  - ssh/internal/bcrypt_pbkdf
+- package: golang.org/x/exp
+  subpackages:
+  - apidiff
+  - constraints
+  - ebnf
+  - io/i2c
+  - io/i2c/driver
+  - io/spi/driver
+  - slices
+  - slog
+  - slog/internal/buffer
+- package: golang.org/x/mod
+  subpackages:
+  - modfile
+  - module
+  - semver
+  - zip
+- package: golang.org/x/net
+  subpackages:
+  - bpf
+  - context
+  - context/ctxhttp
+  - html
+  - html/atom
+  - http/httpguts
+  - http2
+  - http2/hpack
+  - idna
+  - internal/iana
+  - internal/socket
+  - internal/socks
+  - internal/timeseries
+  - ipv4
+  - ipv6
+  - nettest
+  - webdav/internal/xml
+- package: golang.org/x/oauth2
+  subpackages:
+  - authhandler
+  - clientcredentials
+  - google
+  - google/internal/externalaccount
+  - internal
+  - jws
+  - jwt
+- package: golang.org/x/sys
+  subpackages:
+  - cpu
+  - internal/unsafeheader
+  - unix
+  - windows
+  - windows/registry
+  - windows/svc
+  - windows/svc/debug
+  - windows/svc/eventlog
+  - windows/svc/mgr
+- package: golang.org/x/term
+- package: golang.org/x/text
+  subpackages:
+  - cases
+  - cmd/gotext/examples/extract_http/pkg
+  - collate
+  - encoding
+  - encoding/charmap
+  - encoding/htmlindex
+  - encoding/internal
+  - encoding/internal/identifier
+  - encoding/japanese
+  - encoding/korean
+  - encoding/simplifiedchinese
+  - encoding/traditionalchinese
+  - encoding/unicode
+  - feature/plural
+  - internal
+  - internal/catmsg
+  - internal/cldrtree
+  - internal/colltab
+  - internal/format
+  - internal/gen
+  - internal/language
+  - internal/language/compact
+  - internal/number
+  - internal/stringset
+  - internal/tag
+  - internal/utf8internal
+  - language
+  - message
+  - message/catalog
+  - message/pipeline
+  - runes
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/cldr
+  - unicode/norm
+  - width
+- package: golang.org/x/time
+  subpackages:
+  - rate
+- package: golang.org/x/tools
+  subpackages:
+  - go/buildutil
+  - go/callgraph
+  - go/callgraph/cha
+  - go/gcexportdata
+  - go/loader
+  - go/packages
+  - go/ssa
+  - go/ssa/ssautil
+  - txtar
+- package: google.golang.org/api
+  subpackages:
+  - googleapi
+  - iterator
+  - option
+  - option/internaloption
+  - transport/http
+- package: google.golang.org/appengine
+  subpackages:
+  - urlfetch
+- package: google.golang.org/genproto
+  subpackages:
+  - googleapis/cloud/compute/v1
+- package: google.golang.org/grpc
+  subpackages:
+  - metadata
+- package: google.golang.org/protobuf
+  subpackages:
+  - encoding/protojson
+  - proto
+- package: gopkg.in/gavv/httpexpect.v1
+- package: gopkg.in/ini.v1
+- package: gopkg.in/square/go-jose.v2
+  subpackages:
+  - jwt
+- package: gopkg.in/tylerb/graceful.v1
+- package: gopkg.in/yaml.v2
+- package: gopkg.in/yaml.v3
+testImport:
+- package: crypto/ecdh
+- package: github.com/elazarl/go-bindata-assetfs
+- package: github.com/frankban/quicktest
+- package: github.com/golang-jwt/jwt
+- package: github.com/google/go-cmp
+  subpackages:
+  - cmp
+- package: github.com/google/gofuzz
+- package: github.com/gorilla/mux
+- package: github.com/onsi/ginkgo
+  subpackages:
+  - extensions/table
+- package: github.com/onsi/gomega
+  subpackages:
+  - types
+- package: github.com/openlyinc/pointy
+- package: github.com/prometheus/client_model
+  subpackages:
+  - go
+- package: github.com/shurcooL/httpfs
+  subpackages:
+  - filter
+- package: github.com/smartystreets/goconvey
+  subpackages:
+  - convey
+- package: github.com/urfave/negroni
+- package: gopkg.in/check.v1

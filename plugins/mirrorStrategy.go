@@ -10,13 +10,13 @@ import (
 
 	"github.com/nikhilsaraf/go-tools/multithreading"
 
-	"github.com/stellar/kelp/stellargohorizonclientv300/build"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/kelp/api"
 	"github.com/stellar/kelp/kelpdb"
 	"github.com/stellar/kelp/model"
 	"github.com/stellar/kelp/queries"
+	"github.com/stellar/kelp/stellargohorizonclientv300/build"
 	"github.com/stellar/kelp/support/toml"
 	"github.com/stellar/kelp/support/utils"
 )
@@ -563,7 +563,7 @@ func printDebugOffersAndOps(
 	log.Printf("---> deleteBuyOps:\n")
 	for _, o := range deleteBuyOps {
 		mso := o.(*txnbuild.ManageSellOffer)
-		price, _ := strconv.ParseFloat(mso.Price, 64)
+		price, _ := strconv.ParseFloat(mso.Price.String(), 64)
 		invertedPrice := 1 / price
 		amountFloat, _ := strconv.ParseFloat(mso.Amount, 64)
 		log.Printf("--->     offerID=%d, price=%.7f, amount=%.7f\n", mso.OfferID, invertedPrice, amountFloat*price)
@@ -576,7 +576,7 @@ func printDebugOffersAndOps(
 	log.Printf("---> additional bid ops:\n")
 	for _, o := range buyOps {
 		mso := o.(*txnbuild.ManageSellOffer)
-		price, _ := strconv.ParseFloat(mso.Price, 64)
+		price, _ := strconv.ParseFloat(mso.Price.String(), 64)
 		invertedPrice := 1 / price
 		amountFloat, _ := strconv.ParseFloat(mso.Amount, 64)
 		log.Printf("--->     offerID=%d, price=%.7f, amount=%.7f\n", mso.OfferID, invertedPrice, amountFloat*price)

@@ -176,8 +176,10 @@ func (s *APIServer) setupTestnetAccount(address string, signer string, botName s
 		txnbuild.TransactionParams{
 			SourceAccount: fundedAccount,
 			Operations:    txOps,
-			Timebounds:    txnbuild.NewInfiniteTimeout(),
-			BaseFee:       100,
+			Preconditions: txnbuild.Preconditions{
+				TimeBounds: txnbuild.NewInfiniteTimeout(),
+			},
+			BaseFee: 100,
 			// If IncrementSequenceNum is true, NewTransaction() will call `sourceAccount.IncrementSequenceNumber()`
 			// to obtain the sequence number for the transaction.
 			// If IncrementSequenceNum is false, NewTransaction() will call `sourceAccount.GetSequenceNumber()`

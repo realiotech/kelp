@@ -12,7 +12,7 @@ import (
 	"github.com/stellar/kelp/gui/backend"
 	"github.com/stellar/kelp/support/networking"
 	"github.com/stellar/kelp/support/sdk"
-	"github.com/stellar/kelp/support/utils"
+	//"github.com/stellar/kelp/support/utils"
 )
 
 // build flags
@@ -113,10 +113,10 @@ func validateBuild() {
 		os.Exit(1)
 	}
 
-	if amplitudeAPIKey == "" && env == envRelease {
-		utils.PrintErrorHintf("amplitude API key not included, please export AMPLITUDE_API_KEY before running build script (scripts/build.sh)")
-		os.Exit(1)
-	}
+	//if amplitudeAPIKey == "" && env == envRelease {
+	//	utils.PrintErrorHintf("amplitude API key not included, please export AMPLITUDE_API_KEY before running build script (scripts/build.sh)")
+	//	os.Exit(1)
+	//}
 }
 
 func isCcxtUp(ccxtURL string) error {

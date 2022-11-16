@@ -1,0 +1,15 @@
+name: Go
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build
+    strategy:
+      matrix:
+        go: [1.13, 1.14]
+    runs-on: ubuntu-latest
+    container: golang:${{ matrix.go }}-stretch
+    steps:
+    - run: go get golang.org/x/tools/cmd/goimports
+    - run: go get golang.org/x/lint/golint
+    - uses: actions/checkout@v1
+    - run: ./gotest.sh

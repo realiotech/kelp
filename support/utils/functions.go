@@ -15,6 +15,7 @@ import (
 	"github.com/stellar/go/clients/horizonclient"
 	"github.com/stellar/go/keypair"
 	"github.com/stellar/go/network"
+	"github.com/stellar/go/price"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/protocols/horizon/base"
 	"github.com/stellar/go/txnbuild"
@@ -421,11 +422,12 @@ func ParseMaybeFloat(valueString string) (*float64, error) {
 
 // Offer2TxnBuildSellOffer converts an hProtocol.Offer to a txnbuild.ManageSellOffer
 func Offer2TxnBuildSellOffer(offer hProtocol.Offer) txnbuild.ManageSellOffer {
+	parsedPrice, _ := price.Parse(offer.Price)
 	return txnbuild.ManageSellOffer{
 		Selling: Asset2Asset(offer.Selling),
 		Buying:  Asset2Asset(offer.Buying),
 		Amount:  offer.Amount,
-		Price:   offer.Price,
+		Price:   parsedPrice,
 		OfferID: offer.ID,
 	}
 }
