@@ -2,16 +2,12 @@ package networking
 
 import (
 	"crypto/rand"
-	"crypto/sha256"
 	"fmt"
+	"github.com/go-chi/chi"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
-	"time"
-
-	"github.com/go-chi/chi"
-	"github.com/lechengfan/googleauth"
 )
 
 // Config is a struct storing configuration parameters for the monitoring server.
@@ -103,15 +99,17 @@ func (s *server) googleAuthHandler(h http.Handler) http.Handler {
 		log.Printf("error encountered generating random key for google auth")
 		panic(e)
 	}
-	k := sha256.Sum256(key)
-	return &googleauth.Handler{
-		PermittedEmails: s.permittedEmails,
-		Keys:            []*[32]byte{&k},
-		ClientID:        s.googleClientID,
-		ClientSecret:    s.googleClientSecret,
-		MaxAge:          28 * 24 * time.Hour,
-		Handler:         h,
-	}
+	//TODO: Fix this hack
+	//k := sha256.Sum256(key)
+	//return &googleauth.Handler{
+	//	PermittedEmails: s.permittedEmails,
+	//	Keys:            []*[32]byte{&k},
+	//	ClientID:        s.googleClientID,
+	//	ClientSecret:    s.googleClientSecret,
+	//	MaxAge:          28 * 24 * time.Hour,
+	//	Handler:         h,
+	//}
+	return h
 }
 
 // AddHTTPSUpgrade adds an entry on the passed in path to redirect to an https connection

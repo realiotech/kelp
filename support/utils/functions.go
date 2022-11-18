@@ -427,7 +427,7 @@ func Offer2TxnBuildSellOffer(offer hProtocol.Offer) txnbuild.ManageSellOffer {
 		Selling: Asset2Asset(offer.Selling),
 		Buying:  Asset2Asset(offer.Buying),
 		Amount:  offer.Amount,
-		Price:   parsedPrice,
+		Price:   parsedPrice.String(),
 		OfferID: offer.ID,
 	}
 }

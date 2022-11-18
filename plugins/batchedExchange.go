@@ -369,7 +369,7 @@ func convert2Price(number *model.Number) (hProtocol.Price, error) {
 func manageOffer2Order(mob *txnbuild.ManageSellOffer, baseAsset hProtocol.Asset, quoteAsset hProtocol.Asset, orderConstraints *model.OrderConstraints) (*model.Order, error) {
 	orderAction := model.OrderActionSell
 
-	priceFloat, e := strconv.ParseFloat(mob.Price.String(), 64)
+	priceFloat, e := strconv.ParseFloat(mob.Price, 64)
 	if e != nil {
 		return nil, fmt.Errorf("could not convert price (%s) to float: %s", mob.Price, e)
 	}

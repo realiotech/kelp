@@ -16,7 +16,6 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/stellar/go/clients/horizonclient"
-	xdrPrice "github.com/stellar/go/price"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/kelp/api"
@@ -342,9 +341,7 @@ func (sdex *SDEX) createModifySellOffer(offer *hProtocol.Offer, selling hProtoco
 	stringPrice := strconv.FormatFloat(price, 'f', int(sdexOrderConstraints.PricePrecision), 64)
 	stringAmount := strconv.FormatFloat(amount, 'f', int(sdexOrderConstraints.VolumePrecision), 64)
 
-	parsedPrice, _ := xdrPrice.Parse(stringPrice)
-
-	result, err := txnbuild.CreateOfferOp(utils.Asset2Asset(selling), utils.Asset2Asset(buying), stringAmount, parsedPrice)
+	result, err := txnbuild.CreateOfferOp(utils.Asset2Asset(selling), utils.Asset2Asset(buying), stringAmount, stringPrice)
 	if err != nil {
 		return nil, err
 	}
@@ -397,9 +394,7 @@ func (sdex *SDEX) submitOps(opsOld []build.TransactionMutator, asyncCallback fun
 			// to obtain the sequence number for the transaction.
 			IncrementSequenceNum: true,
 			Operations:           ops,
-			Preconditions: txnbuild.Preconditions{
-				TimeBounds: txnbuild.NewInfiniteTimeout(),
-			},
+			Timebounds:           txnbuild.NewInfiniteTimeout(),
 		},
 	)
 	if e != nil {
@@ -459,6 +454,7 @@ func (sdex *SDEX) submit(txeB64 string, asyncCallback func(hash string, e error)
 		if herr, ok := errors.Cause(e).(*horizonclient.Error); ok {
 			var rcs *hProtocol.TransactionResultCodes
 			rcs, e2 := herr.ResultCodes()
+			fmt.Printf("%v\n%v\n", rcs, e2)
 			if e2 != nil {
 				log.Printf("(async) error: no result codes from horizon: %s\n", e2)
 				sdex.invokeAsyncCallback(asyncCallback, "", e2, asyncMode)

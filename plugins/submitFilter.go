@@ -2,7 +2,6 @@ package plugins
 
 import (
 	"fmt"
-	xdrPrice "github.com/stellar/go/price"
 	"log"
 	"strconv"
 
@@ -16,14 +15,15 @@ type SubmitFilter interface {
 	Apply(
 		ops []txnbuild.Operation,
 		sellingOffers []hProtocol.Offer, // quoted quote/base
-		buyingOffers []hProtocol.Offer,  // quoted base/quote
+		buyingOffers []hProtocol.Offer, // quoted base/quote
 	) ([]txnbuild.Operation, error)
 }
 
 // filterFn returns a non-nil op to indicate the op that we want to append to the update. the newOp can do one of the following:
-//     - modify an existing offer
-//     - create a new offer
-//     - update an offer that was created by a previous filterFn
+//   - modify an existing offer
+//   - create a new offer
+//   - update an offer that was created by a previous filterFn
+//
 // filterFn has no knowledge of whether the passed in op is an existing offer or a new op and therefore is not responsible for
 // deleting existing offers.
 // If the newOp returned is nil and it was spawned from an existingOffer then the filterOps function here will automatically delete
@@ -265,7 +265,7 @@ func selectOpOrOffer(
 	}
 
 	offerPrice := float64(nextOffer.PriceR.N) / float64(nextOffer.PriceR.D)
-	opPrice, e := strconv.ParseFloat(mso.Price.String(), 64)
+	opPrice, e := strconv.ParseFloat(mso.Price, 64)
 	if e != nil {
 		return nil, nil, false, fmt.Errorf("could not parse price as float64: %s", e)
 	}
@@ -377,13 +377,11 @@ func handleRemainingOffers(
 }
 
 func convertOffer2MSO(offer hProtocol.Offer) *txnbuild.ManageSellOffer {
-	parsedPrice, _ := xdrPrice.Parse(offer.Price)
-
 	return &txnbuild.ManageSellOffer{
 		Selling:       utils.Asset2Asset(offer.Selling),
 		Buying:        utils.Asset2Asset(offer.Buying),
 		Amount:        offer.Amount,
-		Price:         parsedPrice,
+		Price:         offer.Price,
 		OfferID:       offer.ID,
 		SourceAccount: offer.Seller,
 	}

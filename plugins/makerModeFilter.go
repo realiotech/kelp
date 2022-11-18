@@ -142,7 +142,7 @@ func (f *makerModeFilter) transformOfferMakerMode(
 		return nil, fmt.Errorf("error when running the isSelling check for offer '%+v': %s", *op, e)
 	}
 
-	sellPrice, e := strconv.ParseFloat(op.Price.String(), 64)
+	sellPrice, e := strconv.ParseFloat(op.Price, 64)
 	if e != nil {
 		return nil, fmt.Errorf("could not convert price (%s) to float: %s", op.Price, e)
 	}

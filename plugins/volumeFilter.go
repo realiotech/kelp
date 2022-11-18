@@ -193,7 +193,7 @@ func volumeFilterFn(action queries.DailyVolumeAction, dailyOTB *VolumeFilterConf
 	}
 
 	// extract offer price and amount and adjust for buy offers
-	offerPrice, e := strconv.ParseFloat(op.Price.String(), 64)
+	offerPrice, e := strconv.ParseFloat(op.Price, 64)
 	if e != nil {
 		return nil, fmt.Errorf("could not convert price (%s) to float: %s", op.Price, e)
 	}
