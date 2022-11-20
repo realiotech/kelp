@@ -17,9 +17,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/asticode/go-astilog"
-
-	"github.com/asticode/go-astilectron"
 	bootstrap "github.com/asticode/go-astilectron-bootstrap"
 	"github.com/denisbrodbeck/machineid"
 	"github.com/go-chi/chi"
@@ -229,18 +226,17 @@ func init() {
 				electronURL = tailFilepath.Native()
 			}
 
-			// only open browser or electron when not running in kaas mode
-			if !*options.enableKaas {
-				// kick off the desktop window for UI feedback to the user
-				// local mode (non --dev) and release binary should open browser (since --dev already opens browser via yarn and returns)
-				go func() {
-					if *options.noElectron {
-						openBrowser(appURL, openBrowserWg)
-					} else {
-						openElectron(trayIconPath, electronURL)
-					}
-				}()
-			}
+			// kick off the desktop window for UI feedback to the user
+			// local mode (non --dev) and release binary should open browser (since --dev already opens browser via yarn and returns)
+			go func() {
+				if *options.noElectron {
+					// RP-462 commented out to prevent a browser window from opening. we will run via docker container and access gui
+					// outside docker
+					//openBrowser(appURL, openBrowserWg)
+				} else {
+					openElectron(trayIconPath, electronURL)
+				}
+			}()
 		}
 
 		log.Printf("Starting Kelp GUI Server, gui=%s, cli=%s [%s]\n", guiVersion, version, gitHash)
@@ -440,9 +436,9 @@ func init() {
 		// the frontend app checks the REACT_APP_API_PORT variable to be set when serving
 		os.Setenv("REACT_APP_API_PORT", fmt.Sprintf("%d", *options.port))
 
-		if isLocalMode {
-			generateStaticFiles(kos, guiWebPath)
-		}
+		// 		if isLocalMode {
+		// 			generateStaticFiles(kos, guiWebPath)
+		// 		}
 
 		r := chi.NewRouter()
 		setMiddleware(r)

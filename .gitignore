@@ -12,4 +12,8 @@ gui/filesystem_vfsdata.go
 kelp.prefs
 bind_*.go
 bundler.json
+<<<<<<< Updated upstream
 go/
+=======
+go/
+>>>>>>> Stashed changes
