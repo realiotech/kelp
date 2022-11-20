@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -108,10 +107,10 @@ func checkInitRootFlags() {
 }
 
 func validateBuild() {
-	if version == "" || guiVersion == "" || buildDate == "" || gitBranch == "" || gitHash == "" {
-		fmt.Println("version information not included, please build using the build script (scripts/build.sh)")
-		os.Exit(1)
-	}
+	//if version == "" || guiVersion == "" || buildDate == "" || gitBranch == "" || gitHash == "" {
+	//	fmt.Println("version information not included, please build using the build script (scripts/build.sh)")
+	//	os.Exit(1)
+	//}
 
 	//if amplitudeAPIKey == "" && env == envRelease {
 	//	utils.PrintErrorHintf("amplitude API key not included, please export AMPLITUDE_API_KEY before running build script (scripts/build.sh)")

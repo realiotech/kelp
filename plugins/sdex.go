@@ -450,11 +450,12 @@ func (sdex *SDEX) sign(tx *txnbuild.Transaction) (string, error) {
 
 func (sdex *SDEX) submit(txeB64 string, asyncCallback func(hash string, e error), asyncMode bool) {
 	resp, e := sdex.API.SubmitTransactionXDR(txeB64)
+	fmt.Printf("\n%v\n%v\n\n", resp, e)
 	if e != nil {
 		if herr, ok := errors.Cause(e).(*horizonclient.Error); ok {
 			var rcs *hProtocol.TransactionResultCodes
 			rcs, e2 := herr.ResultCodes()
-			fmt.Printf("%v\n%v\n", rcs, e2)
+			fmt.Printf("\n%v\n%v\n\n", rcs, e2)
 			if e2 != nil {
 				log.Printf("(async) error: no result codes from horizon: %s\n", e2)
 				sdex.invokeAsyncCallback(asyncCallback, "", e2, asyncMode)
