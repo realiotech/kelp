@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/stellar/go/build"
+	"github.com/stellar/go-stellar-base/build"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/kelp/model"
 )

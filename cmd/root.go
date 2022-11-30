@@ -3,14 +3,13 @@ package cmd
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
 
 	"github.com/stellar/kelp/support/networking"
 	"github.com/stellar/kelp/support/sdk"
-	"github.com/stellar/kelp/support/utils"
+	//"github.com/stellar/kelp/support/utils"
 )
 
 // build flags
@@ -102,20 +101,20 @@ func checkInitRootFlags() {
 }
 
 func validateBuild() {
-	if version == "" || guiVersion == "" || buildDate == "" || gitBranch == "" || gitHash == "" {
-		fmt.Println("version information not included, please build using the build script (scripts/build.sh)")
-		os.Exit(1)
-	}
+	//if version == "" || guiVersion == "" || buildDate == "" || gitBranch == "" || gitHash == "" {
+	//	fmt.Println("version information not included, please build using the build script (scripts/build.sh)")
+	//	os.Exit(1)
+	//}
 
-	if amplitudeAPIKey == "" && env == envRelease {
-		utils.PrintErrorHintf("amplitude API key not included, please export AMPLITUDE_API_KEY before running build script (scripts/build.sh)")
-		os.Exit(1)
-	}
+	//if amplitudeAPIKey == "" && env == envRelease {
+	//	utils.PrintErrorHintf("amplitude API key not included, please export AMPLITUDE_API_KEY before running build script (scripts/build.sh)")
+	//	os.Exit(1)
+	//}
 }
 
 func isCcxtUp(ccxtURL string) error {
-    // use the /exchanges uri as a test request for ccxt availability. there is no ping url on the api
-    ccxtURL = ccxtURL + "/exchanges"
+	// use the /exchanges uri as a test request for ccxt availability. there is no ping url on the api
+	ccxtURL = ccxtURL + "/exchanges"
 	e := networking.JSONRequest(http.DefaultClient, "GET", ccxtURL, "", map[string]string{}, nil, "")
 	if e != nil {
 		return fmt.Errorf("unable to connect to ccxt at the URL %s: %s", ccxtURL, e)

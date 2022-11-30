@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/stellar/go/build"
+	"github.com/stellar/go-stellar-base/build"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/go/xdr"
@@ -249,12 +249,12 @@ func ConvertOperation2TM(ops []txnbuild.Operation) []build.TransactionMutator {
 				build.Rate{
 					Selling: build.Asset{Code: mso.Selling.GetCode(), Issuer: mso.Selling.GetIssuer(), Native: mso.Selling.IsNative()},
 					Buying:  build.Asset{Code: mso.Buying.GetCode(), Issuer: mso.Buying.GetIssuer(), Native: mso.Buying.IsNative()},
-					Price:   build.Price(mso.Price),
+					Price:   build.Price(mso.Price.String()),
 				},
 				build.OfferID(mso.OfferID),
 			)
-			if mso.SourceAccount != nil {
-				mob.Mutate(build.SourceAccount{AddressOrSeed: mso.SourceAccount.GetAccountID()})
+			if mso.SourceAccount != "" {
+				mob.Mutate(build.SourceAccount{AddressOrSeed: mso.SourceAccount})
 			}
 		} else {
 			panic(fmt.Sprintf("could not convert txnbuild.Operation to build.TransactionMutator: %v\n", o))
@@ -300,15 +300,13 @@ func convertMOB2MSO(mob build.ManageOfferBuilder) *txnbuild.ManageSellOffer {
 	mso := &txnbuild.ManageSellOffer{
 		Amount:  fmt.Sprintf("%.7f", float64(mob.MO.Amount)/math.Pow(10, 7)),
 		OfferID: int64(mob.MO.OfferId),
-		Price:   fmt.Sprintf("%.7f", float64(mob.MO.Price.N)/float64(mob.MO.Price.D)),
+		Price:   xdr.Price{N: xdr.Int32(mob.MO.Price.N), D: xdr.Int32(mob.MO.Price.D)},
 	}
 	if mob.O.SourceAccount != nil {
-		mso.SourceAccount = &txnbuild.SimpleAccount{
-			AccountID: mob.O.SourceAccount.Address(),
-		}
+		mso.SourceAccount = mob.O.SourceAccount.Address()
 	}
 
-	if mob.MO.Buying.Type == xdr.AssetTypeAssetTypeNative {
+	if xdr.AssetType(mob.MO.Buying.Type) == xdr.AssetTypeAssetTypeNative {
 		mso.Buying = txnbuild.NativeAsset{}
 	} else {
 		var tipe, code, issuer string
@@ -319,7 +317,7 @@ func convertMOB2MSO(mob build.ManageOfferBuilder) *txnbuild.ManageSellOffer {
 		}
 	}
 
-	if mob.MO.Selling.Type == xdr.AssetTypeAssetTypeNative {
+	if xdr.AssetType(mob.MO.Selling.Type) == xdr.AssetTypeAssetTypeNative {
 		mso.Selling = txnbuild.NativeAsset{}
 	} else {
 		var tipe, code, issuer string

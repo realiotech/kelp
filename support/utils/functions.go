@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/stellar/go/xdr"
 	"hash/fnv"
 	"log"
 	"math/big"
@@ -425,7 +426,7 @@ func Offer2TxnBuildSellOffer(offer hProtocol.Offer) txnbuild.ManageSellOffer {
 		Selling: Asset2Asset(offer.Selling),
 		Buying:  Asset2Asset(offer.Buying),
 		Amount:  offer.Amount,
-		Price:   offer.Price,
+		Price:   xdr.Price{N: xdr.Int32(offer.PriceR.N), D: xdr.Int32(offer.PriceR.D)},
 		OfferID: offer.ID,
 	}
 }

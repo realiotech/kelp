@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cavaliercoder/grab"
+	"github.com/cavaliergopher/grab/v3"
 )
 
 // JSONRequestDynamicHeaders submits an HTTP web request and parses the response into the responseData object as JSON

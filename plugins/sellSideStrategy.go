@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/stellar/go/build"
+	"github.com/stellar/go-stellar-base/build"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/kelp/api"
@@ -212,11 +212,11 @@ func (s *sellSideStrategy) computeTargets(level api.Level) (targetPrice *model.N
 func (s *sellSideStrategy) createPrecedingOffers(
 	precedingLevels []api.Level,
 ) (
-	int, // numLevelsConsumed
-	bool, // hitCapacityLimit
+	int,                  // numLevelsConsumed
+	bool,                 // hitCapacityLimit
 	[]txnbuild.Operation, // ops
-	*model.Number, // newTopOffer
-	error, // e
+	*model.Number,        // newTopOffer
+	error,                // e
 ) {
 	hitCapacityLimit := false
 	ops := []txnbuild.Operation{}

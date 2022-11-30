@@ -3,7 +3,7 @@ package plugins
 import (
 	"log"
 
-	"github.com/stellar/go/build"
+	"github.com/stellar/go-stellar-base/build"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/kelp/api"
