@@ -5,6 +5,7 @@ import (
 	"log"
 	"strconv"
 
+	stellarPrice "github.com/stellar/go/price"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/kelp/support/utils"
@@ -15,7 +16,7 @@ type SubmitFilter interface {
 	Apply(
 		ops []txnbuild.Operation,
 		sellingOffers []hProtocol.Offer, // quoted quote/base
-		buyingOffers []hProtocol.Offer, // quoted base/quote
+		buyingOffers []hProtocol.Offer,  // quoted base/quote
 	) ([]txnbuild.Operation, error)
 }
 
@@ -264,7 +265,7 @@ func selectOpOrOffer(
 	}
 
 	offerPrice := float64(nextOffer.PriceR.N) / float64(nextOffer.PriceR.D)
-	opPrice, e := strconv.ParseFloat(mso.Price, 64)
+	opPrice, e := strconv.ParseFloat(mso.Price.String(), 64)
 	if e != nil {
 		return nil, nil, false, fmt.Errorf("could not parse price as float64: %s", e)
 	}
@@ -376,12 +377,17 @@ func handleRemainingOffers(
 }
 
 func convertOffer2MSO(offer hProtocol.Offer) *txnbuild.ManageSellOffer {
+	parsedPrice, err := stellarPrice.Parse(offer.Price)
+	if err != nil {
+		return nil
+	}
+
 	return &txnbuild.ManageSellOffer{
 		Selling:       utils.Asset2Asset(offer.Selling),
 		Buying:        utils.Asset2Asset(offer.Buying),
 		Amount:        offer.Amount,
-		Price:         offer.Price,
+		Price:         parsedPrice,
 		OfferID:       offer.ID,
-		SourceAccount: &txnbuild.SimpleAccount{AccountID: offer.Seller},
+		SourceAccount: offer.Seller,
 	}
 }

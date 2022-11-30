@@ -176,7 +176,6 @@ func init() {
 	hiddenFlag("operationalBuffer")
 	hiddenFlag("operationalBufferNonNativePct")
 	hiddenFlag("ui")
-	tradeCmd.Flags().SortFlags = false
 
 	tradeCmd.Run = func(ccmd *cobra.Command, args []string) {
 		// TODO NS - profiling fails if we call os.Exit

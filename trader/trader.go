@@ -10,7 +10,7 @@ import (
 
 	"github.com/nikhilsaraf/go-tools/multithreading"
 
-	"github.com/stellar/go/build"
+	"github.com/stellar/go-stellar-base/build"
 	"github.com/stellar/go/clients/horizonclient"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
@@ -269,12 +269,15 @@ func (t *Trader) deleteAllOffers(isAsync bool) {
 // 2) the balances and offers are consistent with the fetched trades
 //
 // Note1: we cannot pivot around balances and/or offers by checking if if there are 0 trades because it's possible that the
-//        background thread has fetched the trades during this time. This is why we check if the balances/offers have changed.
+//
+//	background thread has fetched the trades during this time. This is why we check if the balances/offers have changed.
+//
 // Note2: if the trade API is not working (like sometimes on Kraken) then this will fail once but will not crash the bot (we
-//        want the bot to crash in this scenario). We will end up retring here and subsequent runs will likely succeed to because
-//        the bot allows occassional failures. The likelihood that a trade happens exactly during our critical section many times,
-//        which would cause multiple failures, is unlikely. Even if that happens, it does not necessarily indicate a failed API as
-//        that could just be a coincidence, which is exactly what this synchronization function is preventing against.
+//
+//	want the bot to crash in this scenario). We will end up retring here and subsequent runs will likely succeed to because
+//	the bot allows occassional failures. The likelihood that a trade happens exactly during our critical section many times,
+//	which would cause multiple failures, is unlikely. Even if that happens, it does not necessarily indicate a failed API as
+//	that could just be a coincidence, which is exactly what this synchronization function is preventing against.
 func (t *Trader) synchronizeFetchBalancesOffersTrades() error {
 	if t.synchronizeStateLoadEnable && !t.fillTracker.IsRunningInBackground() {
 		// this is purely an optimization block.

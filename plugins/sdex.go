@@ -13,8 +13,9 @@ import (
 	"github.com/nikhilsaraf/go-tools/multithreading"
 	"github.com/pkg/errors"
 
-	"github.com/stellar/go/build"
+	"github.com/stellar/go-stellar-base/build"
 	"github.com/stellar/go/clients/horizonclient"
+	stellarPrice "github.com/stellar/go/price"
 	hProtocol "github.com/stellar/go/protocols/horizon"
 	"github.com/stellar/go/txnbuild"
 	"github.com/stellar/kelp/api"
@@ -201,7 +202,7 @@ func (sdex *SDEX) DeleteOffer(offer hProtocol.Offer) txnbuild.ManageSellOffer {
 	txOffer := utils.Offer2TxnBuildSellOffer(offer)
 	txOffer.Amount = "0"
 	if sdex.SourceAccount != sdex.TradingAccount {
-		txOffer.SourceAccount = &txnbuild.SimpleAccount{AccountID: sdex.TradingAccount}
+		txOffer.SourceAccount = sdex.TradingAccount
 	}
 	return txOffer
 }
@@ -338,7 +339,12 @@ func (sdex *SDEX) createModifySellOffer(offer *hProtocol.Offer, selling hProtoco
 	stringPrice := strconv.FormatFloat(price, 'f', int(sdexOrderConstraints.PricePrecision), 64)
 	stringAmount := strconv.FormatFloat(amount, 'f', int(sdexOrderConstraints.VolumePrecision), 64)
 
-	result, err := txnbuild.CreateOfferOp(utils.Asset2Asset(selling), utils.Asset2Asset(buying), stringAmount, stringPrice)
+	parsedPrice, err := stellarPrice.Parse(stringPrice)
+	if err != nil {
+		return nil, err
+	}
+
+	result, err := txnbuild.CreateOfferOp(utils.Asset2Asset(selling), utils.Asset2Asset(buying), stringAmount, parsedPrice)
 	if err != nil {
 		return nil, err
 	}
@@ -347,7 +353,7 @@ func (sdex *SDEX) createModifySellOffer(offer *hProtocol.Offer, selling hProtoco
 		result.OfferID = offer.ID
 	}
 	if sdex.SourceAccount != sdex.TradingAccount {
-		result.SourceAccount = &txnbuild.SimpleAccount{AccountID: sdex.TradingAccount}
+		result.SourceAccount = sdex.TradingAccount
 	}
 
 	return &result, nil
@@ -391,7 +397,9 @@ func (sdex *SDEX) submitOps(opsOld []build.TransactionMutator, asyncCallback fun
 			// to obtain the sequence number for the transaction.
 			IncrementSequenceNum: true,
 			Operations:           ops,
-			Timebounds:           txnbuild.NewInfiniteTimeout(),
+			Preconditions: txnbuild.Preconditions{
+				TimeBounds: txnbuild.NewInfiniteTimeout(),
+			},
 		},
 	)
 	if e != nil {

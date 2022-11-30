@@ -128,12 +128,16 @@ func (s *APIServer) setupTestnetAccount(address string, signer string, botName s
 		return fmt.Errorf("error checking and funding account: %s", e)
 	}
 
+	creditAsset := txnbuild.CreditAsset{
+		Code:   "COUPON",
+		Issuer: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI",
+	}
+
+	changeTrustAsset, _ := creditAsset.ToChangeTrustAsset()
+
 	var txOps []txnbuild.Operation
 	trustOp := txnbuild.ChangeTrust{
-		Line: txnbuild.CreditAsset{
-			Code:   "COUPON",
-			Issuer: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI",
-		},
+		Line: changeTrustAsset,
 	}
 	txOps = append(txOps, &trustOp)
 
@@ -144,7 +148,7 @@ func (s *APIServer) setupTestnetAccount(address string, signer string, botName s
 			Code:   "COUPON",
 			Issuer: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI",
 		},
-		SourceAccount: &txnbuild.SimpleAccount{AccountID: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI"},
+		SourceAccount: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI",
 	}
 	txOps = append(txOps, &paymentOp)
 
@@ -152,8 +156,10 @@ func (s *APIServer) setupTestnetAccount(address string, signer string, botName s
 		txnbuild.TransactionParams{
 			SourceAccount: fundedAccount,
 			Operations:    txOps,
-			Timebounds:    txnbuild.NewInfiniteTimeout(),
-			BaseFee:       100,
+			Preconditions: txnbuild.Preconditions{
+				TimeBounds: txnbuild.NewInfiniteTimeout(),
+			},
+			BaseFee: 100,
 			// If IncrementSequenceNum is true, NewTransaction() will call `sourceAccount.IncrementSequenceNumber()`
 			// to obtain the sequence number for the transaction.
 			// If IncrementSequenceNum is false, NewTransaction() will call `sourceAccount.GetSequenceNumber()`

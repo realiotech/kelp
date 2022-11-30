@@ -368,8 +368,9 @@ func (s *APIServer) checkAddTrustline(account hProtocol.Account, kp keypair.KP, 
 	var txOps []txnbuild.Operation
 	for _, a := range trustlines {
 		creditAsset := txnbuild.CreditAsset{Code: a.Code, Issuer: a.Issuer}
+		changeTrustAsset, _ := creditAsset.ToChangeTrustAsset()
 		trustOp := txnbuild.ChangeTrust{
-			Line: creditAsset,
+			Line: changeTrustAsset,
 		}
 		txOps = append(txOps, &trustOp)
 		log.Printf("added trust asset operation to transaction for asset: %+v\n", a)
@@ -379,7 +380,7 @@ func (s *APIServer) checkAddTrustline(account hProtocol.Account, kp keypair.KP, 
 				Destination:   address,
 				Amount:        "1000.0",
 				Asset:         creditAsset,
-				SourceAccount: &txnbuild.SimpleAccount{AccountID: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI"},
+				SourceAccount: "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI",
 			}
 			txOps = append(txOps, &paymentOp)
 			log.Printf("added payment operation to transaction for asset because issuer was the public issuer (%s): %+v\n", "GBMMZMK2DC4FFP4CAI6KCVNCQ7WLO5A7DQU7EC7WGHRDQBZB763X4OQI", a)
@@ -391,8 +392,10 @@ func (s *APIServer) checkAddTrustline(account hProtocol.Account, kp keypair.KP, 
 		txnbuild.TransactionParams{
 			SourceAccount: &account,
 			Operations:    txOps,
-			Timebounds:    txnbuild.NewInfiniteTimeout(),
-			BaseFee:       100,
+			Preconditions: txnbuild.Preconditions{
+				TimeBounds: txnbuild.NewInfiniteTimeout(),
+			},
+			BaseFee: 100,
 			// If IncrementSequenceNum is true, NewTransaction() will call `sourceAccount.IncrementSequenceNumber()`
 			// to obtain the sequence number for the transaction.
 			// If IncrementSequenceNum is false, NewTransaction() will call `sourceAccount.GetSequenceNumber()`
