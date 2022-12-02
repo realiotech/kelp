@@ -17,6 +17,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/asticode/go-astikit"
 	"github.com/asticode/go-astilectron"
 	bootstrap "github.com/asticode/go-astilectron-bootstrap"
 	"github.com/asticode/go-astilog"
@@ -120,7 +121,7 @@ func init() {
 			setLogFile(l, logFilepath.Native())
 
 			if *options.verbose {
-				astilog.SetDefaultLogger()
+				astilog.New(astilog.Configuration{Level: astikit.LoggerLevelDebug})
 			}
 		}
 
@@ -182,9 +183,9 @@ func init() {
 			// local mode (non --dev) and release binary should open browser (since --dev already opens browser via yarn and returns)
 			go func() {
 				if *options.noElectron {
-// RP-462 commented out to prevent a browser window from opening. we will run via docker container and access gui
-// outside docker
-// 					openBrowser(appURL, openBrowserWg)
+					// RP-462 commented out to prevent a browser window from opening. we will run via docker container and access gui
+					// outside docker
+					// 					openBrowser(appURL, openBrowserWg)
 				} else {
 					openElectron(trayIconPath, electronURL)
 				}
@@ -372,9 +373,9 @@ func init() {
 		// the frontend app checks the REACT_APP_API_PORT variable to be set when serving
 		os.Setenv("REACT_APP_API_PORT", fmt.Sprintf("%d", *options.port))
 
-// 		if isLocalMode {
-// 			generateStaticFiles(kos, guiWebPath)
-// 		}
+		// 		if isLocalMode {
+		// 			generateStaticFiles(kos, guiWebPath)
+		// 		}
 
 		r := chi.NewRouter()
 		setMiddleware(r)
@@ -649,9 +650,9 @@ func openBrowser(url string, openBrowserWg *sync.WaitGroup) {
 func openElectron(trayIconPath *kelpos.OSPath, url string) {
 	log.Printf("opening URL in electron: %s", url)
 	quitMenuItemOption := &astilectron.MenuItemOptions{
-		Label:   astilectron.PtrStr("Quit"),
-		Visible: astilectron.PtrBool(true),
-		Enabled: astilectron.PtrBool(true),
+		Label:   astikit.StrPtr("Quit"),
+		Visible: astikit.BoolPtr(true),
+		Enabled: astikit.BoolPtr(true),
 		OnClick: astilectron.Listener(func(e astilectron.Event) (deleteListener bool) {
 			quit()
 			return false
@@ -659,17 +660,17 @@ func openElectron(trayIconPath *kelpos.OSPath, url string) {
 	}
 	mainMenuItemOptions := []*astilectron.MenuItemOptions{
 		&astilectron.MenuItemOptions{
-			Label: astilectron.PtrStr("File"),
+			Label: astikit.StrPtr("File"),
 			SubMenu: []*astilectron.MenuItemOptions{
 				&astilectron.MenuItemOptions{
-					Label: astilectron.PtrStr("Reload"),
+					Label: astikit.StrPtr("Reload"),
 					Role:  astilectron.MenuItemRoleReload,
 				},
 				quitMenuItemOption,
 			},
 		},
 		&astilectron.MenuItemOptions{
-			Label: astilectron.PtrStr("Edit"),
+			Label: astikit.StrPtr("Edit"),
 			Role:  astilectron.MenuItemRoleEditMenu,
 		},
 	}
@@ -684,14 +685,14 @@ func openElectron(trayIconPath *kelpos.OSPath, url string) {
 		Windows: []*bootstrap.Window{&bootstrap.Window{
 			Homepage: url,
 			Options: &astilectron.WindowOptions{
-				Center:   astilectron.PtrBool(true),
-				Width:    astilectron.PtrInt(1280),
-				Height:   astilectron.PtrInt(960),
-				Closable: astilectron.PtrBool(false),
+				Center:   astikit.BoolPtr(true),
+				Width:    astikit.IntPtr(1280),
+				Height:   astikit.IntPtr(960),
+				Closable: astikit.BoolPtr(false),
 			},
 		}},
 		TrayOptions: &astilectron.TrayOptions{
-			Image: astilectron.PtrStr(trayIconPath.Native()),
+			Image: astikit.StrPtr(trayIconPath.Native()),
 		},
 		TrayMenuOptions: []*astilectron.MenuItemOptions{
 			quitMenuItemOption,

@@ -6,6 +6,7 @@ require (
 	github.com/Beldur/kraken-go-api-client v0.0.0-20210512194559-2c29669c4ecc
 	github.com/BurntSushi/toml v0.3.1
 	github.com/PagerDuty/go-pagerduty v1.6.0
+	github.com/asticode/go-astikit v0.34.1
 	github.com/asticode/go-astilectron v0.29.0
 	github.com/asticode/go-astilectron-bootstrap v0.4.14
 	github.com/asticode/go-astilog v1.10.1
@@ -34,7 +35,6 @@ require (
 	github.com/agl/ed25519 v0.0.0-20170116200512-5312a6153412 // indirect
 	github.com/akavel/rsrc v0.8.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
-	github.com/asticode/go-astikit v0.34.1 // indirect
 	github.com/asticode/go-astilectron-bundler v0.7.12 // indirect
 	github.com/asticode/go-bindata v1.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
