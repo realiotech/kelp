@@ -121,7 +121,7 @@ func init() {
 			setLogFile(l, logFilepath.Native())
 
 			if *options.verbose {
-				astilog.New(Configuration{Verbose: true})
+				astilog.New(astilog.Configuration{Level: astikit.LoggerLevelDebug})
 			}
 		}
 
